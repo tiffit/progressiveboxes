@@ -1,0 +1,16 @@
+[
+{
+  "modid": "progressiveboxes",
+  "name": "Progressive Boxes",
+  "description": "Adds highly configurable/customizable loot boxes.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Tiffit"],
+  "credits": "Tiffit",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
