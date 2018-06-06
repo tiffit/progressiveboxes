@@ -1,0 +1,120 @@
+{
+	"name": "Ore",
+	"id": "ore",
+	"color": "888888",
+	"amount": 2,
+	"openmessage": "You need to craft an iron pick to open this!",
+	"unique": false,
+	"loot": [
+		{
+			"item": {
+				"item": "minecraft:stone",
+				"amount": 5,
+				"meta": 1,
+				"nbt": {
+					"display": {
+						"Name": "Red Stone"
+					}
+				}
+			},
+			"weight": 20
+		},
+		{
+			"item": {
+				"item": "minecraft:stone",
+				"amount": 5
+			},
+			"weight": 30
+		},
+		{
+			"item": {
+				"item": "minecraft:cobblestone",
+				"amount": 7
+			},
+			"weight": 50
+		},
+		{
+			"item": {
+				"item": "minecraft:iron_ore"
+			},
+			"weight": 5
+		},
+		{
+			"item": {
+				"item": "minecraft:gold_ore"
+			},
+			"weight": 5
+		},
+		{
+			"item": {
+				"item": "minecraft:iron_ingot"
+			},
+			"weight": 3
+		},
+		{
+			"item": {
+				"item": "minecraft:gold_ingot"
+			},
+			"weight": 3
+		},
+		{
+			"item": {
+				"item": "minecraft:diamond"
+			},
+			"weight": 1,
+			"requirements": [
+				{
+					"type": "advancement",
+					"value": "minecraft:story/mine_diamond"
+				}
+			]
+		},
+		{
+			"item": {
+				"item": "minecraft:emerald"
+			},
+			"weight": 1,
+			"requirements": [
+				{
+					"type": "advancement",
+					"value": "minecraft:story/mine_diamond"
+				}
+			]
+		},
+		{
+			"item": {
+				"item": "minecraft:redstone",
+				"amount": 5
+			},
+			"weight": 7
+		},
+		{
+			"item": {
+				"item": "minecraft:diamond",
+				"amount": 2
+			},
+			"weight": 8,
+			"requirements": [
+				{
+					"type": "advancement",
+					"value": "minecraft:husbandry/break_diamond_hoe"
+				}
+			]
+		}
+	],
+	"dropchance": {
+		"chance": 0.03,
+		"overrides": [
+			{
+				"chance": 0.25,
+				"mobgroup": "boss"
+			}
+		]
+	},
+	"requirements": [
+		{
+			"type": "advancement",
+			"value": "minecraft:story/iron_tools"
+		}
+	]
+}
