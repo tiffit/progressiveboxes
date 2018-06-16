@@ -66,7 +66,6 @@ public class CommonProxy {
 			if(!player && box.dropchance_nonplayer != null)chance = box.dropchance_nonplayer;
 			if(chance == null)continue;
 			double realChance = chance.getChance(ent);
-			System.out.println(box.name + "->" + realChance);
 			if(realChance > 0 && Math.random() <= realChance){
 				EntityItem item = new EntityItem(ent.world, ent.posX, ent.posY, ent.posZ, BoxItem.getStack(box));
 				item.setDefaultPickupDelay();	

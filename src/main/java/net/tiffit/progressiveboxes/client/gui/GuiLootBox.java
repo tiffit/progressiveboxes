@@ -3,7 +3,10 @@ package net.tiffit.progressiveboxes.client.gui;
 import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tiffit.progressiveboxes.ProgressiveBoxes;
@@ -39,9 +42,11 @@ public class GuiLootBox extends GuiScreen {
         drawCenteredString(fontRenderer, "Loot Box Content", this.width/2, this.height/2 - 60, color);
         ItemStack highlight = null;
         
+        RenderHelper.disableStandardItemLighting();
+        RenderHelper.enableStandardItemLighting();
+        
         float offsetX = animDur/100F;
         float offsetY = animDur/100F;
-        GlStateManager.disableBlend();
         for(int i = 0; i < stacks.size(); i++){
         	ItemStack stack = stacks.get(i);
         	int ix = (int) (this.width/2 - 8 + (-(stacks.size()-1)*10 + i*20)*offsetX);
@@ -54,6 +59,8 @@ public class GuiLootBox extends GuiScreen {
             	 highlight = stack;
             }
         }
+
+        RenderHelper.enableStandardItemLighting();
         if(highlight != null)renderToolTip(highlight, mouseX, mouseY);
 	}
 	
