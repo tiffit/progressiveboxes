@@ -10,6 +10,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,6 +34,9 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
+    }
+    
+    public void loadComplete(FMLLoadCompleteEvent e) {
     }
 
     @SubscribeEvent
@@ -58,6 +62,7 @@ public class CommonProxy {
     
 	@SubscribeEvent
 	public static void onKillEntity(LivingDropsEvent e) {
+		if(e.getEntity().world.isRemote)return;
 		EntityLivingBase ent = e.getEntityLiving();
 		boolean player = e.getSource().getTrueSource() instanceof EntityPlayer;
 		for(BoxData box : BoxRegistry.LOADED_BOXES){

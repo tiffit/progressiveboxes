@@ -1,6 +1,8 @@
 package net.tiffit.progressiveboxes.data.req;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WorldAgeType implements ReqType {
 
@@ -22,6 +24,12 @@ public class WorldAgeType implements ReqType {
 		} catch (NumberFormatException e) {
 			return false;
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public String localizeValue(String value) {
+		return "World Must Be At Least &c" + value + "&r Days Old";
 	}
 
 }

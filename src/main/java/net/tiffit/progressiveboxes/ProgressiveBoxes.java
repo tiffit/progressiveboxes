@@ -11,9 +11,13 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.tiffit.progressiveboxes.command.ReloadCommand;
+import net.tiffit.progressiveboxes.command.TestRollCommand;
 import net.tiffit.progressiveboxes.item.BoxItem;
 import net.tiffit.progressiveboxes.proxy.CommonProxy;
 
@@ -48,7 +52,7 @@ public class ProgressiveBoxes {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
-		configFolder = event.getSuggestedConfigurationFile().getParentFile();
+		configFolder = event.getModConfigurationDirectory();
 		ConfigUtil.load(configFolder);
 		proxy.preInit(event);
 	}
@@ -63,6 +67,15 @@ public class ProgressiveBoxes {
 		proxy.postInit(e);
 	}
 	
+	@EventHandler
+	public void serverStart(FMLServerStartingEvent e) {
+		e.registerServerCommand(new TestRollCommand());
+		e.registerServerCommand(new ReloadCommand());
+	}
 	
+	@EventHandler
+	public void loadComplete(FMLLoadCompleteEvent e){
+		proxy.loadComplete(e);
+	}
 	
 }

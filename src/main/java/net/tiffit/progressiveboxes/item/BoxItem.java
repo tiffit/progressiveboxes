@@ -90,7 +90,7 @@ public class BoxItem extends Item{
 					p.sendMessage(new TextComponentString(TextFormatting.DARK_RED + data.openmessage));
 					return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
 				}
-				List<ItemStack> loot = data.getLoot((EntityPlayerMP) p);
+				List<ItemStack> loot = data.getLoot((EntityPlayerMP) p, false);
 				NetworkManager.NETWORK.sendTo(new PacketOpenBox(data.getColor(), loot), (EntityPlayerMP) p);
 				for(ItemStack stack : loot){
 					EntityItem ent = new EntityItem(w, p.posX, p.posY, p.posZ, stack);

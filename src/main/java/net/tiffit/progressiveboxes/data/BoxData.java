@@ -29,12 +29,12 @@ public class BoxData {
 		return Integer.parseInt(color, 16);
 	}
 
-	public List<ItemStack> getLoot(EntityPlayerMP pl){
+	public List<ItemStack> getLoot(EntityPlayerMP pl, boolean forceRequirements){
 		List<ItemStack> loot = new ArrayList<ItemStack>();
 		
 		List<LootData> available = new ArrayList<LootData>();
 		for(LootData d : this.loot){
-			if(d.meetsReqs(pl)){
+			if(d.meetsReqs(pl) || forceRequirements){
 				available.add(d);
 			}
 		}

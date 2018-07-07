@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import net.minecraftforge.fml.common.Loader;
 import net.tiffit.progressiveboxes.data.BoxData;
 import net.tiffit.progressiveboxes.data.req.AdvancementType;
 import net.tiffit.progressiveboxes.data.req.ItemType;
@@ -22,6 +23,7 @@ import net.tiffit.progressiveboxes.mobgroups.CustomMobGroup;
 import net.tiffit.progressiveboxes.mobgroups.HostileMobGroup;
 import net.tiffit.progressiveboxes.mobgroups.PassiveMobGroup;
 import net.tiffit.progressiveboxes.mobgroups.PlayerMobGroup;
+import net.tiffit.progressiveboxes.support.BetterQuestingType;
 
 public class ConfigUtil {
 
@@ -56,7 +58,7 @@ public class ConfigUtil {
 		BoxRegistry.LOADED_REQTYPES.add(new AdvancementType());
 		BoxRegistry.LOADED_REQTYPES.add(new ItemType());
 		BoxRegistry.LOADED_REQTYPES.add(new WorldAgeType());
-
+		if(Loader.isModLoaded("betterquesting"))BoxRegistry.LOADED_REQTYPES.add(new BetterQuestingType());
 	}
 	
 	private static void loadBoxes(File[] files){
