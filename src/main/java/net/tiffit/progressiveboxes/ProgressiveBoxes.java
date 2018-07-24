@@ -26,7 +26,7 @@ import net.tiffit.progressiveboxes.proxy.CommonProxy;
 public class ProgressiveBoxes {
 	public static final String MODID = "progressiveboxes";
 	public static final String NAME = "Progressive Boxes";
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.1.1";
 	public static final String DEPENDENCIES = "required-after:tiffitlib;";
 	
 	@Instance(MODID)

@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.1.0"
+version = "1.1.1"
 group = "net.tiffit.progressiveboxes" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "progressiveboxes"
 
@@ -38,11 +38,16 @@ repositories {
     name = "Progwml6 maven"
     url = "http://dvs1.progwml6.com/files/maven"
   }
+  maven { url 'https://maven.mcmoddev.com' }
+  maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
     deobfProvided "mezz.jei:jei_1.12.2:4.11.0.202:api"
     runtime "mezz.jei:jei_1.12.2:4.11.0.202"
+    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.553"
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.95"
+    deobfCompile "codersafterdark.reskillable:Reskillable:1.12.2-1.8.3-SNAPSHOT.87"
     compile project(':TiffitLib')
 }
 

@@ -24,6 +24,8 @@ import net.tiffit.progressiveboxes.mobgroups.HostileMobGroup;
 import net.tiffit.progressiveboxes.mobgroups.PassiveMobGroup;
 import net.tiffit.progressiveboxes.mobgroups.PlayerMobGroup;
 import net.tiffit.progressiveboxes.support.BetterQuestingType;
+import net.tiffit.progressiveboxes.support.GameStagesType;
+import net.tiffit.progressiveboxes.support.ReskillableType;
 
 public class ConfigUtil {
 
@@ -59,6 +61,8 @@ public class ConfigUtil {
 		BoxRegistry.LOADED_REQTYPES.add(new ItemType());
 		BoxRegistry.LOADED_REQTYPES.add(new WorldAgeType());
 		if(Loader.isModLoaded("betterquesting"))BoxRegistry.LOADED_REQTYPES.add(new BetterQuestingType());
+		if(Loader.isModLoaded("gamestages"))BoxRegistry.LOADED_REQTYPES.add(new GameStagesType());
+		if(Loader.isModLoaded("reskillable"))BoxRegistry.LOADED_REQTYPES.add(new ReskillableType());
 	}
 	
 	private static void loadBoxes(File[] files){
