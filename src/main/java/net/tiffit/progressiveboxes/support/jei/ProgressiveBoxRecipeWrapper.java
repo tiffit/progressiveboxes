@@ -9,7 +9,6 @@ import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.tiffit.progressiveboxes.data.BoxData;
-import net.tiffit.progressiveboxes.data.LootData;
 import net.tiffit.progressiveboxes.item.BoxItem;
 
 public class ProgressiveBoxRecipeWrapper implements IRecipeWrapper {
@@ -23,11 +22,24 @@ public class ProgressiveBoxRecipeWrapper implements IRecipeWrapper {
 	@Override
 	public void getIngredients(IIngredients ingredients) {
 		ingredients.setInput(ItemStack.class, BoxItem.getStack(data));
-		List<ItemStack> drops = new ArrayList<ItemStack>();
-		for (LootData data : data.loot) {
-			drops.add(data.item.getStack());
+		int pageSize = 8*5;
+		int pageAmount = data.loot.length/pageSize + 1;
+		List<List<ItemStack>> drops = new ArrayList<List<ItemStack>>();
+		for (int i = 0; i < Math.min(pageSize, data.loot.length); i++) {
+			List<ItemStack> inner = new ArrayList<ItemStack>();
+			inner.add(data.loot[i].item.getStack());
+			if(pageAmount > 1){
+				for(int j = 0; j < pageAmount; j++){
+					ItemStack stack = null;
+					if(j * pageSize + i < data.loot.length){
+						stack = data.loot[j * pageSize + i].item.getStack();
+					}
+					inner.add(stack);
+				}
+			}
+			drops.add(inner);
 		}
-		ingredients.setOutputs(ItemStack.class, drops);
+		ingredients.setOutputLists(ItemStack.class, drops);
 	}
 
 	public BoxData getData() {

@@ -34,7 +34,9 @@ public class ReskillableType implements ReqType {
 
 	@Override
 	public String localizeValue(String value) {
-		return "";
+		String[] spl = value.split(":");
+		if(spl.length < 2)return "Error";
+		return "Requires &c" + spl[0] + " Level " + spl[1] + "";
 	}
 
 }
