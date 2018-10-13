@@ -26,10 +26,11 @@ import net.tiffit.progressiveboxes.mobgroups.PlayerMobGroup;
 import net.tiffit.progressiveboxes.support.BetterQuestingType;
 import net.tiffit.progressiveboxes.support.GameStagesType;
 import net.tiffit.progressiveboxes.support.ReskillableType;
+import net.tiffit.progressiveboxes.support.ct.CTSupport;
 
 public class ConfigUtil {
 
-	private static Gson gson = new GsonBuilder().setLenient().setPrettyPrinting().create();
+	public static Gson gson = new GsonBuilder().setLenient().setPrettyPrinting().create();
 	
 	public static void load(File f){
 		BoxRegistry.LOADED_BOXES.clear();
@@ -63,6 +64,8 @@ public class ConfigUtil {
 		if(Loader.isModLoaded("betterquesting"))BoxRegistry.LOADED_REQTYPES.add(new BetterQuestingType());
 		if(Loader.isModLoaded("gamestages"))BoxRegistry.LOADED_REQTYPES.add(new GameStagesType());
 		if(Loader.isModLoaded("reskillable"))BoxRegistry.LOADED_REQTYPES.add(new ReskillableType());
+
+		if(Loader.isModLoaded("crafttweaker"))CTSupport.registerBoxes();
 	}
 	
 	private static void loadBoxes(File[] files){

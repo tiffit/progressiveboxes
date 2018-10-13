@@ -6,6 +6,7 @@ public class LootData {
 
 	public ItemData item = new ItemData();
 	public int weight = 1;
+	public int group = -1;
 	public ReqData[] requirements = new ReqData[0];
 	
 	public boolean meetsReqs(EntityPlayerMP p){

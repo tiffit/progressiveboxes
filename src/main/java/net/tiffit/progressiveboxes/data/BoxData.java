@@ -15,6 +15,7 @@ public class BoxData {
 	public String id = "mycoolbox";
 	public String color = "FFFFFF";
 	public String openmessage = "You are unable to open this!";
+	public String description = "";
 	public int amount = 1;
 	public int rarity = -1;
 	public boolean unique = true;
@@ -46,7 +47,15 @@ public class BoxData {
 				if(p.inRange(val)){
 					ItemStack newS = p.data.item.getStack();
 					if(!newS.isEmpty())loot.add(newS);
-					if(unique)available.remove(p.data);
+					if(unique){
+						available.remove(p.data);
+						if(p.data.group >= 0){
+							List<LootData> copy = new ArrayList<LootData>(available);
+							for(LootData d : copy){
+								if(d.group == p.data.group)available.remove(d);
+							}
+						}
+					}
 					break;
 				}
 			}

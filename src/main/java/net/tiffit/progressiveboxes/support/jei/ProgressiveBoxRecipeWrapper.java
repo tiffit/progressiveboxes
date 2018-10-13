@@ -8,6 +8,7 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagInt;
 import net.tiffit.progressiveboxes.data.BoxData;
 import net.tiffit.progressiveboxes.item.BoxItem;
 
@@ -31,8 +32,10 @@ public class ProgressiveBoxRecipeWrapper implements IRecipeWrapper {
 			if(pageAmount > 1){
 				for(int j = 0; j < pageAmount; j++){
 					ItemStack stack = null;
-					if(j * pageSize + i < data.loot.length){
-						stack = data.loot[j * pageSize + i].item.getStack();
+					int index = j * pageSize + i;
+					if(index < data.loot.length){
+						stack = data.loot[index].item.getStack();
+						stack.setTagInfo("index", new NBTTagInt(index));
 					}
 					inner.add(stack);
 				}
@@ -41,11 +44,11 @@ public class ProgressiveBoxRecipeWrapper implements IRecipeWrapper {
 		}
 		ingredients.setOutputLists(ItemStack.class, drops);
 	}
-
+	
 	public BoxData getData() {
 		return data;
 	}
-
+	
 	@Override
 	public void drawInfo(Minecraft mc, int recipeWidth, int recipeHeight, int x, int y) {
 		mc.fontRenderer.drawStringWithShadow("T", 140, 4, 0xffffff);

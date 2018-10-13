@@ -41,6 +41,14 @@ public class BoxItem extends Item{
 		}
 	}
 	
+	public static ItemStack getCleanStack(){
+		ItemStack s= new ItemStack(ProgressiveBoxes.progressivebox);
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setBoolean("clean", true);
+		s.setTagCompound(tag);
+		return s;
+	}
+	
 	public static ItemStack getStack(BoxData data){
 		ItemStack stack = new ItemStack(ProgressiveBoxes.progressivebox, 1);
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -65,7 +73,13 @@ public class BoxItem extends Item{
 		if(data != null){
 			tooltip.add(TextFormatting.GRAY + data.name + " Box");
 			if(data.hasRarity())tooltip.add(TextFormatting.GRAY + "Rarity: " + data.rarity);
-		}else{
+			if(!data.description.isEmpty()){
+				String[] descLines = data.description.split("\\n");
+				for(String l : descLines){
+					tooltip.add(TextFormatting.DARK_GRAY + l);
+				}
+			}
+		}else if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean("clean")){
 			tooltip.add(TextFormatting.RED + "Error: Unknown Box");
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);

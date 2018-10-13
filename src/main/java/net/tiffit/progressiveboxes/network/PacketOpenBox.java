@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tiffit.progressiveboxes.client.gui.GuiLootBox;
 
 public class PacketOpenBox implements IMessage {
@@ -46,10 +48,15 @@ public class PacketOpenBox implements IMessage {
 	public static class Handler implements IMessageHandler<PacketOpenBox, IMessage> {
 		@Override
 		public IMessage onMessage(PacketOpenBox message, MessageContext ctx) {
+			run(message);
+			return null;
+		}
+		
+		@SideOnly(Side.CLIENT)
+		private void run(PacketOpenBox message){
 			Minecraft minecraft = Minecraft.getMinecraft();
 			minecraft.player.playSound(SoundEvents.BLOCK_CHEST_OPEN, 0.5f, 1);
 			minecraft.addScheduledTask(() -> minecraft.displayGuiScreen(new GuiLootBox(message.color, message.items)));
-			return null;
 		}
 	}
 }

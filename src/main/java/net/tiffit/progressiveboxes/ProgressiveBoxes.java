@@ -27,7 +27,7 @@ public class ProgressiveBoxes {
 	public static final String MODID = "progressiveboxes";
 	public static final String NAME = "Progressive Boxes";
 	public static final String VERSION = "1.1.2";
-	public static final String DEPENDENCIES = "required-after:tiffitlib;";
+	public static final String DEPENDENCIES = "required-after:tiffitlib;after:crafttweaker;";
 	
 	@Instance(MODID)
 	public static ProgressiveBoxes INSTANCE;
@@ -53,12 +53,12 @@ public class ProgressiveBoxes {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		configFolder = event.getModConfigurationDirectory();
-		ConfigUtil.load(configFolder);
 		proxy.preInit(event);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
+		ConfigUtil.load(configFolder);
 		proxy.init(e);
 	}
 	

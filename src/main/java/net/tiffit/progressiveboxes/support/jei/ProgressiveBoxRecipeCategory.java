@@ -53,7 +53,7 @@ public class ProgressiveBoxRecipeCategory implements IRecipeCategory<Progressive
 	@Override
 	public void drawExtras(Minecraft mc) {
 	}
-
+	
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, ProgressiveBoxRecipeWrapper recipe, IIngredients ingredients) {
 		IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
@@ -73,7 +73,7 @@ public class ProgressiveBoxRecipeCategory implements IRecipeCategory<Progressive
 			@Override
 			public void onTooltip(int slotIndex, boolean input, ItemStack ingredient, List<String> tooltip) {
 				if(!input){
-					LootData ld = data.loot[slotIndex - 1];
+					LootData ld = data.loot[ingredient.getTagCompound().getInteger("index")];
 					float chance = (ld.weight/FIN_TW)*100;
 					tooltip.add(TextFormatting.GRAY + "Chance: " + ItemStack.DECIMALFORMAT.format(chance) + "%");
 					for(ReqData rd : ld.requirements){

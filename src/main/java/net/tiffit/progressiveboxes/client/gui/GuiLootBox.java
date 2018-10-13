@@ -39,9 +39,7 @@ public class GuiLootBox extends GuiScreen {
         GlStateManager.color(1, 1, 1, 1);
         drawCenteredString(fontRenderer, "Loot Box Content", this.width/2, this.height/2 - 60, color);
         ItemStack highlight = null;
-        
-        RenderHelper.disableStandardItemLighting();
-        RenderHelper.enableStandardItemLighting();
+        RenderHelper.enableGUIStandardItemLighting();
         
         float offsetX = animDur/100F;
         float offsetY = animDur/100F;
@@ -57,8 +55,6 @@ public class GuiLootBox extends GuiScreen {
             	 highlight = stack;
             }
         }
-
-        RenderHelper.enableStandardItemLighting();
         if(highlight != null)renderToolTip(highlight, mouseX, mouseY);
 	}
 	
