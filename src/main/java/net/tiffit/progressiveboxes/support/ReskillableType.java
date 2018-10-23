@@ -1,9 +1,11 @@
 package net.tiffit.progressiveboxes.support;
 
+import codersafterdark.reskillable.api.ReskillableAPI;
 import codersafterdark.reskillable.api.data.PlayerData;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
-import codersafterdark.reskillable.api.data.PlayerSkillInfo;
+import codersafterdark.reskillable.api.requirement.Requirement;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextFormatting;
 import net.tiffit.progressiveboxes.data.req.ReqType;
 
 public class ReskillableType implements ReqType {
@@ -21,22 +23,14 @@ public class ReskillableType implements ReqType {
 	@Override
 	public boolean meetsReq(EntityPlayerMP p, String value) {
 		PlayerData data = PlayerDataHandler.get(p);
-		String[] keyval = value.split(":");
-		String name = keyval[0];
-		int level = Integer.valueOf(keyval[1]);
-		for(PlayerSkillInfo info : data.getAllSkillInfo()){
-			if(info.skill.getName().equalsIgnoreCase(name)){
-				return info.getLevel() >= level;
-			}
-		}
-		return false;
+		Requirement requirement = ReskillableAPI.getInstance().getRequirementRegistry().getRequirement(value);
+		return requirement != null && data.requirementAchieved(requirement);
 	}
 
 	@Override
 	public String localizeValue(String value) {
-		String[] spl = value.split(":");
-		if(spl.length < 2)return "Error";
-		return "Requires &c" + spl[0] + " Level " + spl[1] + "";
+		Requirement requirement = ReskillableAPI.getInstance().getRequirementRegistry().getRequirement(value);
+		return requirement == null ? "Error" : "Requires: " + String.format(requirement.internalToolTip(), TextFormatting.RESET);
 	}
 
 }
