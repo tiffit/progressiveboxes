@@ -21,13 +21,14 @@ import net.tiffit.progressiveboxes.command.TestRollCommand;
 import net.tiffit.progressiveboxes.item.BoxItem;
 import net.tiffit.progressiveboxes.proxy.CommonProxy;
 
-@Mod(modid = ProgressiveBoxes.MODID, version = ProgressiveBoxes.VERSION, name = ProgressiveBoxes.NAME, useMetadata = true, dependencies = ProgressiveBoxes.DEPENDENCIES)
+@Mod(modid = ProgressiveBoxes.MODID, version = ProgressiveBoxes.VERSION, name = ProgressiveBoxes.NAME, useMetadata = true, dependencies = ProgressiveBoxes.DEPENDENCIES, guiFactory = ProgressiveBoxes.CONFIG_GUI_FACTORY)
 @Mod.EventBusSubscriber
 public class ProgressiveBoxes {
 	public static final String MODID = "progressiveboxes";
 	public static final String NAME = "Progressive Boxes";
-	public static final String VERSION = "1.1.2";
+	public static final String VERSION = "1.1.3";
 	public static final String DEPENDENCIES = "required-after:tiffitlib;after:crafttweaker;";
+	public static final String CONFIG_GUI_FACTORY = "net.tiffit.progressiveboxes.client.gui.editor.PBGuiConfigFactory";
 	
 	@Instance(MODID)
 	public static ProgressiveBoxes INSTANCE;

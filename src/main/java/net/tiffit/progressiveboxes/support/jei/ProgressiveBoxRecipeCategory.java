@@ -73,7 +73,7 @@ public class ProgressiveBoxRecipeCategory implements IRecipeCategory<Progressive
 			@Override
 			public void onTooltip(int slotIndex, boolean input, ItemStack ingredient, List<String> tooltip) {
 				if(!input){
-					LootData ld = data.loot[ingredient.getTagCompound().getInteger("index")];
+					LootData ld = data.loot[ingredient.hasTagCompound() && ingredient.getTagCompound().hasKey("index") ? ingredient.getTagCompound().getInteger("index") : slotIndex - 1];
 					float chance = (ld.weight/FIN_TW)*100;
 					tooltip.add(TextFormatting.GRAY + "Chance: " + ItemStack.DECIMALFORMAT.format(chance) + "%");
 					for(ReqData rd : ld.requirements){

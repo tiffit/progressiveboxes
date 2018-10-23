@@ -10,7 +10,7 @@ public class ReqData {
 	public String value = "";
 	
 	public boolean meetsReqs(EntityPlayerMP p){
-		if(type.equalsIgnoreCase("none"))return true;
+		if(type.equalsIgnoreCase("none") || type.isEmpty())return true;
 		ReqType type = BoxRegistry.reqFromID(this.type.toLowerCase());
 		if(type != null)return type.meetsReq(p, value);
 		return false;

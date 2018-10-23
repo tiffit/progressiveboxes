@@ -1,11 +1,18 @@
 package net.tiffit.progressiveboxes.data;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.JsonIOException;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.tiffit.progressiveboxes.BoxRegistry;
+import net.tiffit.progressiveboxes.ConfigUtil;
 
 public class BoxData {
 
@@ -24,9 +31,11 @@ public class BoxData {
 	
 	public DropData dropchance = new DropData();
 	public DropData dropchance_player;
-	public DropData dropchance_nonplayer;
+	
+	public transient File file;
 	
 	public int getColor(){
+		if(color.isEmpty())return 0;
 		return Integer.parseInt(color, 16);
 	}
 
@@ -74,6 +83,25 @@ public class BoxData {
 	
 	public boolean hasRarity(){
 		return rarity > 0;
+	}
+	
+	public void save(){
+		if(file != null){
+			try {
+				String json = ConfigUtil.gson.toJson(this);
+				FileWriter writer = new FileWriter(file);
+				writer.write(json);
+				writer.close();
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void delete(){
+		BoxRegistry.LOADED_BOXES.remove(this);
+		if(file != null)file.delete();
+
 	}
 	
 	private static class LootProb{

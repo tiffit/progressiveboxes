@@ -68,7 +68,6 @@ public class CommonProxy {
 		for(BoxData box : BoxRegistry.LOADED_BOXES){
 			DropData chance = box.dropchance;
 			if(player && box.dropchance_player != null)chance = box.dropchance_player;
-			if(!player && box.dropchance_nonplayer != null)chance = box.dropchance_nonplayer;
 			if(chance == null)continue;
 			double realChance = chance.getChance(ent);
 			if(realChance > 0 && Math.random() <= realChance){

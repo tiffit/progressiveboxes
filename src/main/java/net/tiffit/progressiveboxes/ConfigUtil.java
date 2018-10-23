@@ -31,6 +31,8 @@ import net.tiffit.progressiveboxes.support.ct.CTSupport;
 public class ConfigUtil {
 
 	public static Gson gson = new GsonBuilder().setLenient().setPrettyPrinting().create();
+	public static Gson gsonSingleLine = new GsonBuilder().setLenient().create();
+
 	
 	public static void load(File f){
 		BoxRegistry.LOADED_BOXES.clear();
@@ -72,6 +74,7 @@ public class ConfigUtil {
 		for(File f : files){
 			try {
 				BoxData data = gson.fromJson(new FileReader(f), BoxData.class);
+				data.file = f;
 				BoxRegistry.LOADED_BOXES.add(data);
 			} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
 				ProgressiveBoxes.logger.error("Error loading box: " + e.getMessage());

@@ -18,8 +18,12 @@ public class ItemData {
 	
 	public ItemStack getStack(){
         Item item = Item.REGISTRY.getObject(new ResourceLocation(this.item));
-        if(item == null)ProgressiveBoxes.logger.error("Invalid Item: " + item);
+        if(item == null){
+        	ProgressiveBoxes.logger.error("Invalid Item: " + item);
+        	return ItemStack.EMPTY;
+        }
         ItemStack stack = new ItemStack(item, amount, meta);
+        if(nbt == null)nbt = new JsonObject();
         if(nbt.size() > 0){
         	try {
 				stack.setTagCompound(JsonToNBT.getTagFromJson(nbt.toString()));
