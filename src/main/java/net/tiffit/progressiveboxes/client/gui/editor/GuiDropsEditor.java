@@ -67,6 +67,7 @@ public class GuiDropsEditor extends GuiChildScreen {
 					rd.mobgroup = value;
 				}
 			});
+			key.setMaxStringLength(50);
 			key.setText(rd.mobgroup);
 			GuiTextField value = new GuiTextField(i, fontRenderer, width/2 + 3, 40 + (i+1)*23, (width-23)/2, 20);
 			value.setGuiResponder(new GuiResponderString() {

@@ -9,7 +9,6 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
-import net.minecraft.world.World;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.tiffit.progressiveboxes.client.gui.editor.GuiBoxEditor.GuiButtonClean;
@@ -39,6 +38,7 @@ public class GuiReqEditor extends GuiChildScreen {
 					rd.type = value;
 				}
 			});
+			key.setMaxStringLength(50);
 			key.setText(rd.type);
 			GuiTextField value = new GuiTextField(i, fontRenderer, width / 2 + 3, 40 + i * 23, (width - 23) / 2, 20);
 			value.setGuiResponder(new GuiResponderString() {
@@ -47,6 +47,7 @@ public class GuiReqEditor extends GuiChildScreen {
 					rd.value = value;
 				}
 			});
+			value.setMaxStringLength(100);
 			value.setText(rd.value);
 			tfMap.add(Pair.of(key, value));
 		}
@@ -54,7 +55,6 @@ public class GuiReqEditor extends GuiChildScreen {
 	}
 
 	public ReqData[] getModifiedData() {
-		World world;
 		return data.toArray(new ReqData[0]);
 	}
 

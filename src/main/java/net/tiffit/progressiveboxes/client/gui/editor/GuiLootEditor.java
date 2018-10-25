@@ -37,11 +37,13 @@ public class GuiLootEditor extends GuiChildScreen {
 	public void initGui() {
 		textfields.clear();
 		GuiTextField tfitem = new GuiTextField(0, fontRenderer, 10, 40, 200, 20);
+		tfitem.setMaxStringLength(100);
 		setGuiTextField(tfitem, data.item.item, "item", (id, str) -> {
 			data.item.item = str;
 		});
 		
 		GuiTextField ftamount = new GuiTextField(0, fontRenderer, 10, 40 * 2, 30, 20);
+		ftamount.setMaxStringLength(2);
 		ftamount.setValidator((str) -> {
 			if (str.isEmpty())
 				return true;
@@ -58,6 +60,7 @@ public class GuiLootEditor extends GuiChildScreen {
 		});
 		
 		GuiTextField ftmeta = new GuiTextField(0, fontRenderer, 10 + 45, 40 * 2, 30, 20);
+		ftamount.setMaxStringLength(6);
 		ftmeta.setValidator((str) -> {
 			if (str.isEmpty())
 				return true;
@@ -167,7 +170,7 @@ public class GuiLootEditor extends GuiChildScreen {
 			float scale = 5;
 			ItemStack item = data.item.getStack();
 			GlStateManager.scale(scale, scale, 0);
-			RenderHelper.enableGUIStandardItemLighting();
+			RenderHelper.enableStandardItemLighting();
             GlStateManager.color(1, 1, 1, 1);
 			mc.getRenderItem().renderItemAndEffectIntoGUI(item, 0, 0);
 			String text = "";

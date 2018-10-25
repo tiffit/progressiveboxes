@@ -24,6 +24,7 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 
 	private BoxData data;
 	private int scroll = 0;
+	private int maxScroll = 0;
 
 	public GuiBoxItemsMenu(GuiScreen parent, BoxData data) {
 		super(parent);
@@ -35,15 +36,20 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 		buttonList.clear();
 		int y = 0;
 		int x = 0;
+		scroll = 0;
+		maxScroll = 0;
+		LootButton button;
 		for (int i = 0; i < data.loot.length; i++) {
-			buttonList.add(new LootButton(i, x, y - scroll, data.loot[i]));
+			buttonList.add(button = new LootButton(i, x, y - scroll, data.loot[i]));
+			if(button.y + button.height > this.height)maxScroll++;
 			x++;
 			if (this.width < x * 110 + 110) {
 				x = 0;
 				y++;
 			}
 		}
-		buttonList.add(new LootButton(data.loot.length, x, y - scroll, null));
+		buttonList.add(button = new LootButton(data.loot.length, x, y - scroll, null));
+		if(button.y + button.height > this.height)maxScroll++;
 	}
 
 	@Override
@@ -51,14 +57,14 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
-	
+
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button instanceof LootButton) {
 			LootButton lb = (LootButton) button;
-			if(lb.data != null){
+			if (lb.data != null) {
 				mc.displayGuiScreen(new GuiLootEditor(this, lb.data));
-			}else{
+			} else {
 				LootData ld = new LootData();
 				List<LootData> list = Lists.newArrayList(data.loot);
 				list.add(ld);
@@ -67,8 +73,8 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 				mc.displayGuiScreen(new GuiLootEditor(this, ld));
 			}
 		}
-	}	
-	
+	}
+
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		super.keyTyped(typedChar, keyCode);
@@ -86,23 +92,26 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 			}
 		}
 	}
-	
+
 	@Override
-	public void handleMouseInput(){
+	public void handleMouseInput() {
 		try {
 			super.handleMouseInput();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		int i = Integer.signum(Mouse.getEventDWheel());
-		if (i != 0){
+		if (i != 0) {
 			scroll -= i;
-			if(scroll < 0)scroll = 0;
+			if (scroll < 0)
+				scroll = 0;
+			if(scroll > maxScroll)
+				scroll = maxScroll;
 			initGui();
 		}
 	}
 
-	public static class LootButton extends GuiButton {
+	public class LootButton extends GuiButton {
 
 		private LootData data;
 		private ItemStack item;
@@ -116,28 +125,43 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 
 		@Override
 		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-			Gui.drawRect(x, y, x + width, y + height, 0x55ffffff);
 			this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-			int color = 0x55000000;
+
+			Gui.drawRect(x, y, x + width, y + height, 0x55ffffff);
+			int innerColor = 0x55000000;
 			if (hovered)
-				color = 0x44000000;
-			GuiScreen.drawRect(x + 1, y + 1, x + width - 1, y + height - 1, color);
+				innerColor = 0x44000000;
+			GuiScreen.drawRect(x + 1, y + 1, x + width - 1, y + height - 1, innerColor);
 			float scale = 50 / 16f;
 			FontRenderer fr = mc.fontRenderer;
 			if (data == null) {
-				drawCenteredString(fr, "Add New Item", x + width / 2, y - 5 + height/2, 0xffffffff);
+				drawCenteredString(fr, "Add New Item", x + width / 2, y - 5 + height / 2, 0xffffffff);
 			} else {
 				GlStateManager.pushMatrix();
 				GlStateManager.translate(x + 25, y + 25, 0);
 				GlStateManager.scale(scale, scale, 0);
-				RenderHelper.enableGUIStandardItemLighting();
-	            GlStateManager.color(1, 1, 1, 1);
+				RenderHelper.enableStandardItemLighting();
+				GlStateManager.color(1, 1, 1, 1);
 				mc.getRenderItem().renderItemAndEffectIntoGUI(item, 0, 0);
 				String text = "";
-	            if(item.getCount() > 1)text = item.getCount() + "";
-	            mc.getRenderItem().renderItemOverlayIntoGUI(fr, item, 0, 0, text);
-	            RenderHelper.disableStandardItemLighting();
+				if (item.getCount() > 1)
+					text = item.getCount() + "";
+				mc.getRenderItem().renderItemOverlayIntoGUI(fr, item, 0, 0, text);
+				RenderHelper.disableStandardItemLighting();
 				GlStateManager.popMatrix();
+				drawCenteredString(fr, "Weight: " + data.weight, x + width / 2, y + 5, 0xffffffff);
+				int groupColor = 0xffffffff;
+				if (data != null && data.group != -1) {
+					for (GuiButton button : buttonList) {
+						if (button instanceof LootButton) {
+							LootButton lb = (LootButton) button;
+							if (lb != this && lb.data != null && lb.hovered && lb.data.group == data.group) {
+								groupColor = 0xffddaa00;
+							}
+						}
+					}
+				}
+				drawCenteredString(fr, "Group: " + data.group, x + width / 2, y + height - 10, groupColor);
 			}
 		}
 	}

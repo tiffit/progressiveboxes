@@ -1,5 +1,6 @@
 package net.tiffit.progressiveboxes.client.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
@@ -15,7 +16,7 @@ public class GuiLootBox extends GuiScreen {
 	
 	private float r, g, b;
 	private int color;
-	private List<ItemStack> stacks;
+	private List<ItemStack> stacks = new ArrayList<>();
 	private int guiLeft, guiTop;
 	private int animDur = 0;
 	
@@ -24,7 +25,11 @@ public class GuiLootBox extends GuiScreen {
         g = (float)(color >> 8 & 255) / 255.0F;
         b = (float)(color & 255) / 255.0F;
         this.color = color;
-        this.stacks = stacks;
+        for(ItemStack stack : stacks){
+        	if(!stack.isEmpty()){
+        		this.stacks.add(stack);
+        	}
+        }
 	}
 	
 	@Override

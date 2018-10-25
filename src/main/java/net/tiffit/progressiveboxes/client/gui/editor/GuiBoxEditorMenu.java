@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -25,6 +26,7 @@ public class GuiBoxEditorMenu extends GuiChildScreen {
 
 	private List<BoxData> boxes = new ArrayList<>();
 	private int scroll = 0;
+	private int maxScroll = 0;
 
 	public GuiBoxEditorMenu(GuiScreen parent) {
 		super(parent);
@@ -40,15 +42,20 @@ public class GuiBoxEditorMenu extends GuiChildScreen {
 		buttonList.clear();
 		int y = 0;
 		int x = 0;
+		scroll = 0;
+		maxScroll = 0;
+		ButtonBox button;
 		for (int i = 0; i < boxes.size(); i++) {
-			buttonList.add(new ButtonBox(i, x, y - scroll, boxes.get(i)));
+			buttonList.add(button = new ButtonBox(i, x, y - scroll, boxes.get(i)));
+			if(button.y + button.height > this.height)maxScroll++;
 			x++;
 			if (this.width < x * 110 + 110) {
 				x = 0;
 				y++;
 			}
 		}
-		buttonList.add(new ButtonBox(boxes.size(), x, y - scroll, null));
+		buttonList.add(button = new ButtonBox(boxes.size(), x, y - scroll, null));
+		if(button.y + button.height > this.height)maxScroll++;
 	}
 
 	@Override
@@ -63,6 +70,8 @@ public class GuiBoxEditorMenu extends GuiChildScreen {
 			scroll -= i;
 			if (scroll < 0)
 				scroll = 0;
+			if(scroll > maxScroll)
+				scroll = maxScroll;
 			initGui();
 		}
 	}

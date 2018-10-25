@@ -38,10 +38,12 @@ public class GuiBoxEditor extends GuiChildScreen {
 		textfields.clear();
 		buttonList.clear();
 		GuiTextField tfname = new GuiTextField(0, fontRenderer, 10, 40, 200, 20);
+		tfname.setMaxStringLength(50);
 		setGuiTextField(tfname, data.name, "name", (id, str) -> {
 			data.name = str;
 		});
 		GuiTextField tfid = new GuiTextField(0, fontRenderer, 213, 40, 200, 20);
+		tfid.setMaxStringLength(50);
 		setGuiTextField(tfid, data.id, "id", (id, str) -> {
 			data.id = str;
 		});
@@ -60,14 +62,17 @@ public class GuiBoxEditor extends GuiChildScreen {
 			data.color = str;
 		});
 		GuiTextField ftopenmsg = new GuiTextField(0, fontRenderer, 10, 40 * 3, 200, 20);
+		ftopenmsg.setMaxStringLength(100);
 		setGuiTextField(ftopenmsg, data.openmessage, "openmsg", (id, str) -> {
 			data.openmessage = str;
 		});
 		GuiTextField ftdescription = new GuiTextField(0, fontRenderer, 10, 40 * 4, 200, 20);
+		ftdescription.setMaxStringLength(100);
 		setGuiTextField(ftdescription, data.description, "description", (id, str) -> {
 			data.description = str;
 		});
 		GuiTextField ftamount = new GuiTextField(0, fontRenderer, 10, 40 * 5, 75, 20);
+		ftamount.setMaxStringLength(2);
 		ftamount.setValidator((str) -> {
 			if (str.isEmpty())
 				return true;
