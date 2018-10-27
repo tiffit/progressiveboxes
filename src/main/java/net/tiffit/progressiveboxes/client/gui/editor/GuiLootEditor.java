@@ -19,6 +19,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.tiffit.progressiveboxes.ConfigUtil;
 import net.tiffit.progressiveboxes.client.gui.editor.GuiBoxEditor.GuiButtonClean;
 import net.tiffit.progressiveboxes.client.gui.editor.GuiBoxEditor.GuiResponderString;
+import net.tiffit.progressiveboxes.data.ItemData;
 import net.tiffit.progressiveboxes.data.LootData;
 import net.tiffit.tiffitlib.client.GuiChildScreen;
 
@@ -118,6 +119,7 @@ public class GuiLootEditor extends GuiChildScreen {
 		});
 		
 		buttonList.add(new GuiButtonClean(0, 10, 40*5, 200, 20, "Requirements..."));
+		if(mc.player != null && mc.player.inventory != null)buttonList.add(new GuiButtonClean(1, 10, 40*6, 200, 20, "Import Item From Inventory..."));
 	}
 
 	private void setGuiTextField(GuiTextField field, String text, String type, GuiResponderString responder) {
@@ -131,6 +133,8 @@ public class GuiLootEditor extends GuiChildScreen {
 		super.actionPerformed(button);
 		if(button.id == 0){
 			mc.displayGuiScreen(new GuiReqEditor(this, Lists.newArrayList(data.requirements)));
+		}else if(button.id == 1){
+			mc.displayGuiScreen(new GuiInventoryImport(this));
 		}
 	}
 
@@ -139,6 +143,17 @@ public class GuiLootEditor extends GuiChildScreen {
 		if(child instanceof GuiReqEditor){
 			GuiReqEditor gui = (GuiReqEditor) child;
 			data.requirements = gui.getModifiedData();
+		}else if(child instanceof GuiInventoryImport){
+			GuiInventoryImport importer = (GuiInventoryImport) child;
+			if(importer.selected){
+				ItemStack in = importer.stack;
+				ItemData data = this.data.item;
+				data.item = in.getItem().getRegistryName().toString();
+				data.amount = in.getCount();
+				data.meta = in.getMetadata();
+				data.nbt = in.hasTagCompound() ? ConfigUtil.gson.fromJson(in.getTagCompound().toString(), JsonObject.class) : new JsonObject();
+				initGui();
+			}
 		}
 	}
 	

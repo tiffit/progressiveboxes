@@ -87,6 +87,7 @@ public class GuiBoxItemsMenu extends GuiChildScreen {
 						list.remove(data);
 						this.data.loot = list.toArray(new LootData[0]);
 						initGui();
+						break;
 					}
 				}
 			}
